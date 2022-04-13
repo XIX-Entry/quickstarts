@@ -16,17 +16,27 @@ if ENV_FILE:
 app = Flask(__name__)
 app.secret_key = env.get("APP_SECRET_KEY")
 
+# Entry config variables
+WORKSPACE = env.get("WORKSPACE")
+CLIENT_ID = env.get("CLIENT_ID")
+CLIENT_SECRET = env.get("CLIENT_SECRET")
+ENTRY_ENDPOINT = env.get("ENTRY_ENDPOINT").rstrip("/")
+WORKSPACE_ENDPOINT = f"{ENTRY_ENDPOINT}/{WORKSPACE}"
+
+metadata_url = f"{WORKSPACE_ENDPOINT}/.well-known/openid-configuration"
+logout_url = f"{WORKSPACE_ENDPOINT}/protocol/openid-connect/logout"
+
 
 oauth = OAuth(app)
 
 oauth.register(
     "entry",
-    client_id=env.get("CLIENT_ID"),
-    client_secret=env.get("CLIENT_SECRET"),
+    client_id=CLIENT_ID,
+    client_secret=CLIENT_SECRET,
     client_kwargs={
         "scope": "openid profile email",
     },
-    server_metadata_url=f'https://{env.get("DOMAIN")}/.well-known/openid-configuration',
+    server_metadata_url=metadata_url,
 )
 
 
@@ -58,13 +68,11 @@ def login():
 def logout():
     session.clear()
     return redirect(
-        "https://"
-        + env.get("DOMAIN")
-        + "/protocol/openid-connect/logout?"
+        logout_url + "?"
         + urlencode(
             {
                 "redirect_uri": url_for("home", _external=True),
-                "client_id": env.get("CLIENT_ID"),
+                "client_id": CLIENT_ID,
             },
             quote_via=quote_plus,
         )
