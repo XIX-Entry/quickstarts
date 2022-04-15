@@ -17,6 +17,7 @@ Every example is focused on a specific platform and use case.
 Examples for typical web apps with a dedicated backend implementation.
 
 - [Python Web App](./web-app-python)
+- [React Web App](./entry-react-ts)
 
 # Additional resources
 
