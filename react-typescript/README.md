@@ -14,7 +14,7 @@
 ## Running locally
 
 1. Run `npm install` or `yarn` to install dependencies
-2. Run `npm run start` or `yarn start`
+2. Run `npm start` or `yarn start`
 
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
