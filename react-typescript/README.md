@@ -3,6 +3,7 @@
 - `src/index.ts` is an entry point
 - `src/oidc-config.js` contains OIDC configuration
 - `src/app.tsx` shows basic behavior
+- `pages` folder with app's pages
 - `public/` has all public assets
 # Quickstart
 
